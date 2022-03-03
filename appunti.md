@@ -1,6 +1,6 @@
-#Programmazione e laboratorio 1
+# Programmazione e laboratorio 1
 
-##0. Introduzione
+## 0. Introduzione
 
 Questi appunti non forniscono in alcun modo un metodo di studio, seguono il corso delle lezioni e non sono corretti e/o integrati in un secondo momento.
 
@@ -9,7 +9,7 @@ Il codice scritto negli esempi non é stato mai compilato, quindi potrebbe conte
 Il prof Marin (che tiene il corso) **NON** é in nessun modo affiliato alla repo da cui viene questo file e di conseguenza **NON** é responsabile di eventuali errori presenti in esso
 ~~(molto probabilmente non é nemmeno a conoscenza di questi appunti)~~
 
-###Licenza (CC BY-SA 4.0) 
+### Licenza (CC BY-SA 4.0) 
 ![Attribution](https://creativecommons.org/images/deed/by.png)  ![ShareAlike](https://creativecommons.org/images/deed/sa.png)
 
 Gli appunti sono rilasciati sotto licenza CC BY-SA 4.0
@@ -20,10 +20,10 @@ Ció rende possibile la redistribuzione del seguente materiale, anche con modifi
 
 La copia integrale della seguente puó essere trovata [qui](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
-###Tipi
+### Tipi
 I tipi di dato sonod un insieme di valori sui quali sono definite delle operazioni
 
-###Namespace
+### Namespace
 
 Le namespace permettono di dividere variabili e funzioni in vari "spazi", ció rende impossibile la sovrapposizione di firme (ad esempio fra il nostro codice e quello importato da una libreria)
 
@@ -43,7 +43,7 @@ Se invece vogliamo usare un certo namespace come default basterá aggiungere nel
 e quindi, questo ```std::Vector() ``` _[...]_ diventerá ```Vector() ``` _[...]_
 
 
-###Reference
+### Reference
 
 Una reference in C++ é un altro modo per riferirsi ad una variabile
 
@@ -108,7 +108,7 @@ min2(x,y) = 0; //é LEGALE come fosse una variabile
 min2(3,y+2) = 0; //é ILLEGALE, per fare il passaggio per reference servono dei left value
 ```
 
-##2. Vettori
+## 2. Vettori
 In C++ possiamo fare tutto del C, anche usare gli array in modo brutto e statico.
 
 ```
@@ -120,11 +120,11 @@ Questo metodo é deprecato e serve anche una variabile con la quale conto l'effe
 ```
 int d;
 ```
-#####IN C++ SIA I VETTORI CHE LE STRINGHE SONO STATE RIFATTE
+##### IN C++ SIA I VETTORI CHE LE STRINGHE SONO STATE RIFATTE
 
 Perché erano una m...
 
-###Inizializzare un vettore:
+### Inizializzare un vettore:
 ```
 #include <vectors>
 
@@ -181,7 +181,7 @@ Per aggiungere un elemento in coda:
 Per avere l'ultimo valore:
 ```v.back()```
 
-###Altre cose fighe della classe vector
+### Altre cose fighe della classe vector
 
 Il C++ fa automaticamente copie element by element negli assegnamenti fra vettori:
 ```
@@ -210,7 +210,7 @@ Se voglio promettere al chiamante che non modifico il vettore uso una reference 
 ```
 void stampa(const std::vector<int> &v){ /*cose*/}
 ```
-###Bubble Sort
+### Bubble Sort
 
 1. Introduciamo una soglia, fino alla soglia é ordinata e tiene gli elementi piú piccoli
 2. sopra la soglia prendo il piú piccolo e lo metto poco sopra la soglia
@@ -230,7 +230,7 @@ void bubble(std::vector<int> &v){
     }
 }
 ```
-###Max di array
+### Max di array
 
 Nel seguente codice ```max``` é sempre > o = di tutti gli elementi nell'array
 
@@ -247,7 +247,7 @@ int massimo(const std::vector<int> &v){
 }
 ```
 
-###Elemento in array
+### Elemento in array
 
 **NON** usare ```break;```,```continue;``` o ```return;```
 e manco l'and con la flag...
@@ -276,7 +276,7 @@ bool contiene(const vector<int> &v,int el){
 }
 ```
 
-###Proprietá universali
+### Proprietá universali
 
 Regola: proprietá su l'insieme vuoto ritorna true
 
@@ -293,7 +293,7 @@ bool universale(const std::vector<int> &v){
 }
 ```
 
-##3. Stringhe
+## 3. Stringhe
 
 Da importare con un include
 
@@ -305,9 +305,9 @@ Si inizializzano cosí:
 
 Valgono tutte le proprietá dei vettori e quindi si possono confrontare automaticamente
 
-##4. Puntatori ed iteratori
+## 4. Puntatori ed iteratori
 
-###Puntatori in c e c++
+### Puntatori in c e c++
 
 ```
 type a; //variabile
@@ -337,7 +337,7 @@ for(pv = vet;pv<vet+40;pv++){
 }
 ```
 
-###Iteratori
+### Iteratori
 In c++ abbiamo le classi container, per visitare gli elementi delle classi usiamo gli iteratori
 
 Peculiaritá:
@@ -369,7 +369,7 @@ for(it=v.begin();it!=v.end();it++){
 
 Dentro il ciclo for non si puó modificare (come dimensioni) il vector altrimenti gli iteratori vengono invalidati
 
-###KeyWord AUTO
+### KeyWord AUTO
 
 Dichiarazione normale:
 ```    
@@ -383,7 +383,7 @@ auto var = cose
 
 e sará il compilatore a mettere il tipo giusto
 
-####Estrarre un numero casuale:
+#### Estrarre un numero casuale:
 
 in un intervallo [a,b]
 
@@ -430,7 +430,7 @@ for(int i : v){
 }
 ```
 
-##6. Struct in C++
+## 6. Struct in C++
 
 ```
 #include <iostream>
@@ -453,7 +453,7 @@ int main(){
 Convenzione: le struct iniziano con la lettera maiuscola
 non abbiamo bisogno di scrivere sempre struct
 
-###Shallow copy
+### Shallow copy
 
 ```
 prima v2
@@ -516,7 +516,7 @@ pstruct->b = 4.20;
 delete pstruct;
 ```
 
-###Costruttore
+### Costruttore
 
 ```
 struct Prima{
@@ -533,7 +533,7 @@ COSTRUTTORE: Funzione con stesso nome della struct e senza tipo di ritorno
 
 NO PARAMETRI: significa costruttore di default
 
-###Distruttore
+### Distruttore
 
 ```
 struct Prima{
@@ -549,7 +549,7 @@ il distruttore viene chiamato se faccio delete o finisce scope
 
 Se faccio una new in una graffa interna devo fare una delete
 
-###Copy constructor 
+### Copy constructor 
 
 Quando passo per copia posso personalizzare il costruttore
 
@@ -557,7 +557,7 @@ Quando passo per copia posso personalizzare il costruttore
 Prima z = x //Prima z{x}   costruttore per copia
 Prima* pz = new Prima(z) //costruttore per copia
 ```
-#####Definizione copy constructor
+##### Definizione copy constructor
 
 ```
 struct Prima{
@@ -636,7 +636,7 @@ int main(){
 
 Quando finisce la stampa il vettore copiato x viene distrutto e siccome noi "puntiamo" ad un vettore liberiamo il vettore che é lo stesso di a, quindi a si trova senza vettore
 
-###Metodi della struct
+### Metodi della struct
 
 ```
 struct Vettore{
@@ -682,7 +682,7 @@ struct Vettore{
 
 ```
 
-####Overloading
+#### Overloading
 
 Lo stesso metodo puó avere piú versioni con piú parametri
 
@@ -713,7 +713,7 @@ Come possiamo notare abbiamo il default constructor (quello senza parametri) e p
 
 **Il distruttore non puó essere in overloading**
 
-###7. Visibilitá in c++
+### 7. Visibilitá in c++
 
 Esistono 3 tipi di visibilitá
 - Private
@@ -745,7 +745,7 @@ class Vettore{
 
 ```
 
-#####ESEMPIO COMPLETO DI CLASSE:
+##### ESEMPIO COMPLETO DI CLASSE:
 ```
 class PascalString{
     private:
