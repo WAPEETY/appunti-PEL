@@ -1,6 +1,6 @@
-#Programmazione e laboratorio 1
+# Programmazione e laboratorio 1
 
-##0. Introduzione
+## 0. Introduzione
 
 Questi appunti non forniscono in alcun modo un metodo di studio, seguono il corso delle lezioni e non sono corretti e/o integrati in un secondo momento.
 
@@ -9,7 +9,7 @@ Il codice scritto negli esempi non é stato mai compilato, quindi potrebbe conte
 Il prof Marin (che tiene il corso) **NON** é in nessun modo affiliato alla repo da cui viene questo file e di conseguenza **NON** é responsabile di eventuali errori presenti in esso
 ~~(molto probabilmente non é nemmeno a conoscenza di questi appunti)~~
 
-###Licenza (CC BY-SA 4.0) 
+### Licenza (CC BY-SA 4.0) 
 ![Attribution](https://creativecommons.org/images/deed/by.png)  ![ShareAlike](https://creativecommons.org/images/deed/sa.png)
 
 Gli appunti sono rilasciati sotto licenza CC BY-SA 4.0
@@ -20,16 +20,16 @@ Ció rende possibile la redistribuzione del seguente materiale, anche con modifi
 
 La copia integrale della seguente puó essere trovata [qui](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
-###Tipi
+### Tipi
 I tipi di dato sonod un insieme di valori sui quali sono definite delle operazioni
 
-###Namespace
+### Namespace
 
 Le namespace permettono di dividere variabili e funzioni in vari "spazi", ció rende impossibile la sovrapposizione di firme (ad esempio fra il nostro codice e quello importato da una libreria)
 
 Di default per usare una funzione o un oggetto di un altro namespace usiamo:
 
-```
+```c++
 namespace::funzione();
 ```
 
@@ -38,16 +38,16 @@ ad esempio:
 
 Se invece vogliamo usare un certo namespace come default basterá aggiungere nel codice:
 
-```using namespace <nomeNS>```
+```using namespace <nomeNS>```c++
 
 e quindi, questo ```std::Vector() ``` _[...]_ diventerá ```Vector() ``` _[...]_
 
 
-###Reference
+### Reference
 
 Una reference in C++ é un altro modo per riferirsi ad una variabile
 
-```
+```c++
 int a; //dichiaro un intero
 int &b = a; //ho dichiarato un reference
 ```
@@ -57,12 +57,12 @@ D'ora in poi scrivere ```a=4``` o ```b=4``` sará uguale
 Le funzioni possono avere parametri per referenza, tuttavia **NON** é possibile passare espressioni ma solo left_values.
 Data quindi una funzione ```swap``` con la seguente firma:
 
-```
+```c++
 void swap(int &a,int &b){/*code*/}
 ```
 
 effettuare una chiamata del tipo:
-```
+```c++
 int x = 60;
 int y = 350;
 swap(x,y+70);
@@ -71,7 +71,7 @@ swap(x,y+70);
 
 Peculiaritá:
 
-``` 
+```c++
 swap(x,y) = 80;
 ```
 
@@ -79,7 +79,7 @@ swap(x,y) = 80;
 
 ##1. Valore per reference:
 
-```
+```c++
 int min1(int a,int b){
     if(a<b){
         return a;
@@ -108,55 +108,55 @@ min2(x,y) = 0; //é LEGALE come fosse una variabile
 min2(3,y+2) = 0; //é ILLEGALE, per fare il passaggio per reference servono dei left value
 ```
 
-##2. Vettori
+## 2. Vettori
 In C++ possiamo fare tutto del C, anche usare gli array in modo brutto e statico.
 
-```
+```c++
 int v[30];
 ```
 
 Questo metodo é deprecato e serve anche una variabile con la quale conto l'effettiva dimensione
 
-```
+```c++
 int d;
 ```
-#####IN C++ SIA I VETTORI CHE LE STRINGHE SONO STATE RIFATTE
+##### IN C++ SIA I VETTORI CHE LE STRINGHE SONO STATE RIFATTE
 
 Perché erano una m...
 
-###Inizializzare un vettore:
-```
+### Inizializzare un vettore:
+```c++
 #include <vectors>
 
 std::vector<int> v;
 ```
 
 potrei anche fare:
-```
+```c++
 using std::vector;
 ```
 per importare automaticamente vector dal suo namespace
 
 Un altro costruttore per vector é:
-```
+```c++
 std::vector<double> v2(50/*size, puó essere generato runtime*/,3.14/*valore di tutti gli elementi*/) 
 ```
 
 Un terzo modo:
-```
+```c++
 std::vector<int> v3(v); //costruzione per copia
 ```
 
 ###Assegnare valori
 
 Possiamo farlo C-style:
-```
+```c++
 int h=2;
 v[h] = 4; //v in posizione h = 4
 ```
 Peró **NON** controlla se andiamo out of index
 infatti per essere piú sicuri conviene usare:
-```
+```c++
 v.at(h) = 4; //stessa identica cosa
 ```
 Perché con questo metodo il campo ```at``` verifica che siamo dentro al vettore
@@ -164,7 +164,7 @@ Perché con questo metodo il campo ```at``` verifica che siamo dentro al vettore
 <br/>
 
 Con i vector possiamo evitare la variabile con la dimensione dell'array:
-```
+```c++
 for(int i=0;i<v.size;i++){
     //code
 }
@@ -176,29 +176,29 @@ la ```capacity``` la useremo poco dato che fa tutto il linguaggio
 <br/>
 
 Per aggiungere un elemento in coda:
-```v.pushback(elem) //aggiunge elem in coda al vettore```
+```v.pushback(elem) //aggiunge elem in coda al vettore```c++
 
 Per avere l'ultimo valore:
-```v.back()```
+```v.back()```c++
 
-###Altre cose fighe della classe vector
+### Altre cose fighe della classe vector
 
 Il C++ fa automaticamente copie element by element negli assegnamenti fra vettori:
-```
+```c++
 vector<int> v1 = {7,4,2};
 vector<int> v2;
 
 v2 = v1;
 ```
 e rimangono indipendenti, ci permette anche di fare confronti element by element:
-```
+```c++
 v2 = v1;
 v2==v1 //TRUE;
 ```
 
 Ovviamente i vettori si possono passare per copia o per reference e quindi
 
-```
+```c++
 //copia
 void stampa(std::vector<int> v){ /*cose*/}
 
@@ -207,10 +207,10 @@ void stampa(std::vector<int> &v){ /*cose*/}
 ```
 
 Se voglio promettere al chiamante che non modifico il vettore uso una reference immodificabile:
-```
+```c++
 void stampa(const std::vector<int> &v){ /*cose*/}
 ```
-###Bubble Sort
+### Bubble Sort
 
 1. Introduciamo una soglia, fino alla soglia é ordinata e tiene gli elementi piú piccoli
 2. sopra la soglia prendo il piú piccolo e lo metto poco sopra la soglia
@@ -219,7 +219,7 @@ void stampa(const std::vector<int> &v){ /*cose*/}
 
 A livello pratico, confronto sempre due elementi e li swappo se non sono in ordine
 
-```
+```c++
 void bubble(std::vector<int> &v){
     for(int soglia=0;soglia<v.size();soglia++){
         for(int i=v.size()-1;i>soglia;i--){
@@ -230,11 +230,11 @@ void bubble(std::vector<int> &v){
     }
 }
 ```
-###Max di array
+### Max di array
 
 Nel seguente codice ```max``` é sempre > o = di tutti gli elementi nell'array
 
-```
+```c++
 int massimo(const std::vector<int> &v){
     int max;
     for(int i=1;i<v.size();i++){
@@ -247,12 +247,12 @@ int massimo(const std::vector<int> &v){
 }
 ```
 
-###Elemento in array
+### Elemento in array
 
-**NON** usare ```break;```,```continue;``` o ```return;```
+**NON** usare ```break;```,```continue;``` o ```return;```c++
 e manco l'and con la flag...
 
-```
+```c++
 bool contiene(const vector<int> &v,int el){
     bool trovato=False;
     for(int i=0;i<v.size(),i++){
@@ -264,7 +264,7 @@ bool contiene(const vector<int> &v,int el){
 ```
 in sostanza ti attacchi e usi un while...
 
-```
+```c++
 int i=0;
 bool contiene(const vector<int> &v,int el){
     while(i<v.size()&&!trovato){
@@ -276,12 +276,12 @@ bool contiene(const vector<int> &v,int el){
 }
 ```
 
-###Proprietá universali
+### Proprietá universali
 
 Regola: proprietá su l'insieme vuoto ritorna true
 
 ESEMPIO: tutti i numeri sono positivi:
-```
+```c++
 bool universale(const std::vector<int> &v){
     bool resp=true;
     for(int i=0; i<v.size();i++){
@@ -293,23 +293,23 @@ bool universale(const std::vector<int> &v){
 }
 ```
 
-##3. Stringhe
+## 3. Stringhe
 
 Da importare con un include
 
-```#include <string>```
+```#include <string>```c++
 
 Si inizializzano cosí:
 
-```std::string l="Hello world"```
+```std::string l="Hello world"```c++
 
 Valgono tutte le proprietá dei vettori e quindi si possono confrontare automaticamente
 
-##4. Puntatori ed iteratori
+## 4. Puntatori ed iteratori
 
-###Puntatori in c e c++
+### Puntatori in c e c++
 
-```
+```c++
 type a; //variabile
 type* b = &a; //indirizzo di memoria di a
 ```
@@ -317,7 +317,7 @@ In c++ l'asterisco per convenzione lo mettiamo vicino il tipo
 
 Per assegnare valori ad un puntatore:
 
-```
+```c++
 double x,y;
 double* px=&x;
 
@@ -331,19 +331,19 @@ std::cout<<y; //7.2
 ```
 
 Scorrere array tramite aritmetica puntatori:
-```
+```c++
 for(pv = vet;pv<vet+40;pv++){
     std::cout<<*pv<<std::endl; 
 }
 ```
 
-###Iteratori
+### Iteratori
 In c++ abbiamo le classi container, per visitare gli elementi delle classi usiamo gli iteratori
 
 Peculiaritá:
 Gli iteratori funzionano indipendentemente dalla posizione dove sono salvati gli elementi
 
-```
+```c++
 using namespace std::vector;
 vector<int> v{1,3,5,7,-4,0,3}
 
@@ -354,7 +354,7 @@ for(it=v.begin();it!=v.end();it++){
 }
 ```
 Somma elementi con iterator
-```
+```c++
 using namespace std::vector;
 vector<int> v{1,3,5,7,-4,0,3}
 
@@ -369,25 +369,25 @@ for(it=v.begin();it!=v.end();it++){
 
 Dentro il ciclo for non si puó modificare (come dimensioni) il vector altrimenti gli iteratori vengono invalidati
 
-###KeyWord AUTO
+### KeyWord AUTO
 
 Dichiarazione normale:
-```    
+```c++
 tipo identificatore;
 ```
 
 se abbiamo una dichiarazione con assegnamento possiamo usare 
-```
+```c++
 auto var = cose
 ```
 
 e sará il compilatore a mettere il tipo giusto
 
-####Estrarre un numero casuale:
+#### Estrarre un numero casuale:
 
 in un intervallo [a,b]
 
-```
+```c++
 #include <cstdlib>
 
 x = random()%(b-a+1)+a;
@@ -397,7 +397,7 @@ x = random()%(b-a+1)+a;
 
 Mazzo di 40 carte estrarne una casuale senza estrarre due volte la stessa
 
-```
+```c++
 #include <cstdlib>
 
 //vettore di interi per vedere se carta é stata giá estratta
@@ -421,18 +421,18 @@ void inizializza(vector<int> &mazzo){
 
 ```
 
-##5. For Each
+## 5. For Each
 
-```
+```c++
 vector <int> v;
 for(int i : v){
     std::cout<<e;
 }
 ```
 
-##6. Struct in C++
+## 6. Struct in C++
 
-```
+```c++
 #include <iostream>
 
 struct prima{
@@ -453,9 +453,9 @@ int main(){
 Convenzione: le struct iniziano con la lettera maiuscola
 non abbiamo bisogno di scrivere sempre struct
 
-###Shallow copy
+### Shallow copy
 
-```
+```c++
 prima v2
 
 v2 = v1;
@@ -463,14 +463,14 @@ v2 = v1;
 
 Questa operazione copia bit a bit di v1 su v2
 
-```
+```c++
 v2.b[3] = v2.b[3]+1;
 ```
 
 Legale!
 Modifica v2 e **NON** v1
 
-```
+```c++
 struct Prima{
     int a;
     double b[10];
@@ -494,7 +494,7 @@ SPOILER: facendo copia bit a bit il puntatore delle due struct é uguale quindi 
 
 In questo esempio buffer == v1.pc == v2.pc
 
-```
+```c++
 Prima* pstruct;
 pstruct = new Prima;
 
@@ -506,7 +506,7 @@ Crea un oggetto in memoria dinamica
 ```delete``` operatore del linguaggio
 Distrugge un oggetto in memoria dinamica
 
-```
+```c++
 Prima* pstruct;
 pstruct = new Prima;
 
@@ -516,9 +516,9 @@ pstruct->b = 4.20;
 delete pstruct;
 ```
 
-###Costruttore
+### Costruttore
 
-```
+```c++
 struct Prima{
     Prima(){
         std::cout<<"Hey, sono il costruttore!";
@@ -533,9 +533,9 @@ COSTRUTTORE: Funzione con stesso nome della struct e senza tipo di ritorno
 
 NO PARAMETRI: significa costruttore di default
 
-###Distruttore
+### Distruttore
 
-```
+```c++
 struct Prima{
     ~Prima(){
         std::cout<<"Hey, sono il distruttore!";  
@@ -549,17 +549,17 @@ il distruttore viene chiamato se faccio delete o finisce scope
 
 Se faccio una new in una graffa interna devo fare una delete
 
-###Copy constructor 
+### Copy constructor 
 
 Quando passo per copia posso personalizzare il costruttore
 
-```
+```c++
 Prima z = x //Prima z{x}   costruttore per copia
 Prima* pz = new Prima(z) //costruttore per copia
 ```
-#####Definizione copy constructor
+##### Definizione copy constructor
 
-```
+```c++
 struct Prima{
     Prima(const Prima& copia){
         a = copia.a; //il mio a (dell'istanza che creo) é uguale a copia.a (lo struct che avevo giá);
@@ -570,7 +570,7 @@ struct Prima{
 
 Esempio:
 
-```
+```c++
 struct Vettore{
     int capacity;
     int size;
@@ -601,7 +601,7 @@ struct Vettore{
 
 ERRORI COMUNI:
 
-```
+```c++
 struct Vettore{
     int capacity;
     int size;
@@ -636,9 +636,9 @@ int main(){
 
 Quando finisce la stampa il vettore copiato x viene distrutto e siccome noi "puntiamo" ad un vettore liberiamo il vettore che é lo stesso di a, quindi a si trova senza vettore
 
-###Metodi della struct
+### Metodi della struct
 
-```
+```c++
 struct Vettore{
     int capacity;
     int size;
@@ -682,11 +682,11 @@ struct Vettore{
 
 ```
 
-####Overloading
+#### Overloading
 
 Lo stesso metodo puó avere piú versioni con piú parametri
 
-```
+```c++
 struct Vettore{
     int capacity;
     int size;
@@ -709,11 +709,11 @@ struct Vettore{
 };
 
 ```
-Come possiamo notare abbiamo il default constructor (quello senza parametri) e poi il secondo costruttore in Overloading che accetta i parametri ```(int dim, int val)```
+Come possiamo notare abbiamo il default constructor (quello senza parametri) e poi il secondo costruttore in Overloading che accetta i parametri ```(int dim, int val)```c++
 
 **Il distruttore non puó essere in overloading**
 
-###7. Visibilitá in c++
+### 7. Visibilitá in c++
 
 Esistono 3 tipi di visibilitá
 - Private
@@ -722,7 +722,7 @@ Esistono 3 tipi di visibilitá
 
 **NOTA:** la struct diventa una class da ora in poi
 
-```
+```c++
 class Vettore{
     /** 
      *  queste variabili ora non possono essere lette/scritte
@@ -745,8 +745,8 @@ class Vettore{
 
 ```
 
-#####ESEMPIO COMPLETO DI CLASSE:
-```
+##### ESEMPIO COMPLETO DI CLASSE:
+```c++
 class PascalString{
     private:
         char* str;
