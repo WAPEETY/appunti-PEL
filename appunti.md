@@ -791,5 +791,97 @@ class PascalString{
             }
             str[0] = str[0]+i-1;
         }
+};
+```
+
+## Liste
+
+Una lista di elementi di tipo T é 
+  1. Una lista vuota
+  2. Un elemento di tipo T seguito da una lista di elementi di tipo T
+
+7 -> 9 -> 5 -> 4 -> 2 -> 1
+
+La lista vuota viene codificata con un puntatore a nullptr
+
+```c++
+    struct TCella{
+        int info;
+        TCella* next;
+    };
+
+    typedef TCella* Tlista;
+
+```
+
+Funzioni:
+
+```c++
+Tlista crea(){
+    return nullptr;
+}
+```
+```c++
+void prepend(Tlista& t, int el){
+    Tlista nuova;
+    nuova = new TCella;
+    nuova->info = el;
+    nuova->next = t;
+    t = nuova;
+}
+```
+```c++
+void append(Tlista& t,int el){
+    Tlista pc = t;
+    if(t!=nullptr){
+        while(pc->next != nullptr){
+            pc = pc->next;
+        }
+        pc->next = new TCella;
+        pc->next->next = nullptr;
+        pc->next->info = el;
+    }
+    else{
+        prepend(t,el);
+    }
+}
+```
+```c++
+void append(Tlista& t,int el){
+    if(t==nullptr)
+        prepend(t,el);
+    else
+        append(t->next,el);
+}
+```
+```c++
+void distruggi(Tlista& t){
+    if(t!=nullptr){
+        distruggi(t->next);
+        delete(t);
+        t = nullptr;
+    }
+}
+```
+```c++
+int somma(Tlista& t){
+    if(t == nullptr){
+        return 0;
+    }
+    else{
+        return t->info + somma(t->next);
+    }
+    
+}
+```
+```c++
+int massimo(Tlista& t){ //assumo l != nullptr
+    if(l->next == nullptr){
+        return l->info
+    }
+    int max = massimo(l->next);
+    if(max > l->info)
+        return max;
+    return l->info;
 }
 ```
