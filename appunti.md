@@ -713,7 +713,9 @@ Come possiamo notare abbiamo il default constructor (quello senza parametri) e p
 
 **Il distruttore non puó essere in overloading**
 
-### 7. Visibilitá in c++
+## 7. Classi in C++
+
+Il funzionamento é simile a quello delle struct
 
 Esistono 3 tipi di visibilitá
 - Private
@@ -745,7 +747,7 @@ class Vettore{
 
 ```
 
-##### ESEMPIO COMPLETO DI CLASSE:
+#### ESEMPIO COMPLETO DI CLASSE:
 ```c++
 class PascalString{
     private:
@@ -794,7 +796,7 @@ class PascalString{
 };
 ```
 
-## Liste
+##8. Liste
 
 Una lista di elementi di tipo T é 
   1. Una lista vuota
@@ -883,5 +885,215 @@ int massimo(Tlista& t){ //assumo l != nullptr
     if(max > l->info)
         return max;
     return l->info;
+}
+```
+```c++
+/*trova elemento*/
+bool presente(Tlista& t,int el){
+    if(t == nullptr)
+        return false;
+    return (t->info == el) || presente(t->next, el); 
+    //invertendo funzionerebbe ma non non sarebbe efficente
+}
+```
+```c++
+Tlista presente(Tlista& t,int el){
+    if(t == nullptr)
+        return nullptr;
+    
+    if(t->info==el)
+        return t;
+    
+    return presente(t->next,el);
+}
+```
+```c++
+Tlista presente(Tlista& t,int el){
+    if(t == nullptr)
+        return nullptr;
+    
+    Tlist pe = presente(t->next, el);
+    if(pe==nullptr){
+        if(t->info==)
+            return t;
+        else
+            return nullptr;
+    }else{
+        return pe;
+    }
+}
+```
+```c++
+void stampa(Tlista& t){
+    if(t!=nullptr){
+        std::cout<<t->info<<std::endl;
+        stampa(t->next);
+    }
+}
+```
+```c++
+void stampa_rev(Tlista& t){
+    if(t!= nullptr){
+        stampa_rev(t->next);
+        std::cout<<t->info<<std::endl;
+    }
+}
+```
+```c++
+/*  data una lista, cancellare tutti gli elementi 
+    dall'ultima occorrenza dello ero alla fine
+    ES: 2->5->7->0->9->7->0->4->3 elimino 0->4->3
+*/
+bool elimina(Tlista& t){
+    if(t==nullptr)
+        return false;
+        
+    bool resp = elimina(t->next);
+    if(resp==false)
+        resp = (t->info==0);
+    
+    delete t;
+    t = nullptr;
+    return resp;
+}
+```
+```c++
+void ribalta(Tlista& t){
+    if(t== nullptr){
+        return;
+    }
+    if(t->next==nullptr){
+        return;
+    }
+    
+    Tlist support = l->next;
+    ribalta(support);
+    t->next->next = t;
+    t->next = nullptr;
+    t = support;
+}
+```
+```c++
+/*  Data una lista di int, dire se é possibile fare una certa
+    somma s con i numeri pescati
+*/
+
+bool esiste_somma(Tlista& t,int somma){
+    if(t== nullptr)
+        return (somma ==0);
+    
+    return esiste_somma(Tlista& t,somma) || esiste_somma(l->next,somma-t->inf);
+}
+
+```
+
+### Dividere la firma dalla funzione nelle classi
+
+```c++
+
+class ListInt{
+    public:
+        ListInt(); //default constructor
+        ~ListInt(); //destructor
+        ListInt(const ListInt& s); //copy constructor
+        void prepend();
+        void const itPrint();
+        void const print();
+        int& at(unsigned int pos);
+        const int& at(unsigned int pos) const;
+
+    private:
+        struct Cell {
+            int info;
+            Cell* next;
+        };
+
+        Cell* head;
+
+        void destroy(Cell *pc);
+        void const recPrint(Cell *pc);
+        Cell* copy(Cell* source);
+};
+
+ListInt::ListInt(){
+    head = nullptr;
+}
+
+List::~ListInt(){
+    destroy(head);
+}
+
+void ListInt::destroy(Cell* pc){
+    if(pc){
+        destroy(pc->next);
+        delete(pc);
+    }
+}
+
+void ListInt::prepend(int el){
+    Cell* newone = new Cell;
+    newone->info = el;
+    newone->next = head;
+    head = newone;
+}
+
+void ListInt::itPrint(){
+    Cell pc = head;
+    while(pc){
+        std::cout<<pc->info<<std::endl;
+        pc = pc->next;
+    }
+}
+
+void ListInt::print(){
+    recPrint();
+}
+
+void recPrint(Cell *pc){
+    if(pc){
+        std::cout<<pc->info<<std::endl;
+        recPrint(pc->next);
+    }
+}
+
+void MyPrint(const ListInt& l){
+    std::cout<<"Here's my list: "<<std::endl;
+    l.print();
+}
+
+void ListInt::ListInt(const ListInt& s);
+    head = nullptr;
+    copy(head, s.head);
+
+ListInt::Cell* ListInt::copy(Cell* source){
+    if(source == nullptr)
+        return nullptr;
+    
+    Cell* dest = new Cell;
+    dest->info = source->info;
+    dest->next = copy(source->next);
+    return dest;
+}
+
+int& ListInt::at(unsigned int pos){
+    Cell* pc = head;
+    while(pc!= nullptr && pos>0){
+        pc = pc->next;
+    }
+    assert(pc!=nullptr);
+    if(pc)
+        return pc->info;
+    return dummy;
+}
+
+const int& ListInt::at(unsigned int pos){
+    Cell* pc = head;
+    while(pc!= nullptr && pos>0){
+        pc = pc->next;
+    }
+    assert(pc!=nullptr);
+    if(pc)
+        return pc->info;
+    return dummy;
 }
 ```
