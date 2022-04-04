@@ -1197,3 +1197,351 @@ ListInt& operator+(const ListInt& x){
     return supp;
 }
 ```
+
+
+**Esempio classe:**
+```c++
+#include <iostream>
+
+class Complex{
+    public:
+        Complex();
+        Complex(double real);
+        Complex(double real, double imag);
+
+        ~Complex();
+
+        bool operator==(const Complex& c) const;
+        Complex operator+(const Complex& c) const;
+        Complex operator*(const Complex& c) const;
+        Complex operator=(const Complex& c);
+        Complex operator==(const Complex& c) const;
+    private:
+        double x; //real part
+        double y; //imaginary part
+};
+
+Complex::Complex(){
+    x = 0.0;
+    y = 0.0;
+}
+
+Complex::Complex(double real){
+    x = real;
+    y = 0.0;
+}
+
+Complex::Complex(double real, double imag){
+    x = real;
+    y = imag;
+}
+
+Complex::~Complex(){
+}
+
+Complex Complex::operator==(const Complex& c) const{
+    return x == c.x && y == c.y;
+}
+
+Complex Complex::operator+(const Complex& c) const{
+    Complex res;
+    res.x = x+c.x;
+    res.y = y+c.y;
+    return res;
+}
+
+Complex Complex::operator*(const Complex& c) const{
+    Complex res;
+    res.x = this->x*c.x - this->y*c.y;
+    res.y = this->x*c.y + this->y*c.x;
+    return res;
+}
+
+Complex Complex::operator=(const Complex& c){
+    this->x = c.x;
+    this->y = c.y;
+    return *this
+}
+```
+
+### Metodi Friend
+
+Dichiari un operatore amico della classe e puoi fare operazioni che accedono alla roba privata di una classe
+
+## Header
+
+Nome: \<nomefile>.hpp
+
+comp.hpp
+```c++
+
+#ifndef COMPLEX
+#define COMPLEX
+class Complex{
+    public:
+        Complex();
+        Complex(double real);
+        Complex(double real, double imag);
+
+        ~Complex();
+
+        bool operator==(const Complex& c) const;
+        Complex operator+(const Complex& c) const;
+        Complex operator*(const Complex& c) const;
+        Complex operator=(const Complex& c);
+        Complex operator==(const Complex& c) const;
+    private:
+        double x; //real part
+        double y; //imaginary part
+};
+
+#endif
+```
+
+comp.cpp
+```c++
+#include "comp.hpp"
+
+Complex::Complex(){
+    x = 0.0;
+    y = 0.0;
+}
+
+Complex::Complex(double real){
+    x = real;
+    y = 0.0;
+}
+
+Complex::Complex(double real, double imag){
+    x = real;
+    y = imag;
+}
+
+Complex::~Complex(){
+}
+
+Complex Complex::operator==(const Complex& c) const{
+    return x == c.x && y == c.y;
+}
+
+Complex Complex::operator+(const Complex& c) const{
+    Complex res;
+    res.x = x+c.x;
+    res.y = y+c.y;
+    return res;
+}
+
+Complex Complex::operator*(const Complex& c) const{
+    Complex res;
+    res.x = this->x*c.x - this->y*c.y;
+    res.y = this->x*c.y + this->y*c.x;
+    return res;
+}
+
+Complex Complex::operator=(const Complex& c){
+    this->x = c.x;
+    this->y = c.y;
+    return *this
+}
+```
+
+main.cpp
+```c++
+#include <iostream>
+#include "comp.hpp"
+
+int main(){
+    Complex x;
+    Complex y(34);
+    Complex z(0,1);
+}
+```
+
+Makefile
+```yaml
+comp: comp.o main.o
+    g++ std=c++14 comp.o main.o -ocomp
+
+comp.o: comp.cpp comp.hpp
+    g++ std=c++14 -c comp.cpp -ocomp.o
+
+main.o:
+    g++ std=c++14 -c main.cpp -omain.o
+
+clean:
+    rm comp comp.o main.o
+```
+
+### PIMPL - Pointer to impementation
+
+Fino ad ora abbiamo usato il metodo classico, ma per usare pimpl facciamo:
+
+```c++
+private:
+    Impl* pimpl;
+
+```
+
+#### Esempio classe PIMPL
+
+comp.cpp
+```c++
+#include "comp.hpp"
+
+class Impl{
+    public:
+        double x;
+        double y;
+};
+
+Complex::Complex(){
+    pimpl = new Impl;
+    pimpl->x = 0.0;
+    pimpl->y = 0.0;
+}
+
+Complex::Complex(const Complex& c){
+    pimpl = new Impl;
+    pimpl->x = c.pimpl->x;
+    pimpl->y = c.pimpl->y;
+}
+
+Complex::Complex(double real){
+    pimpl = new Impl;
+    pimpl->x = real;
+    pimpl->y = 0.0;
+}
+
+Complex::Complex(double real, double imag){
+    pimpl = new Impl;
+    pimpl->x = real;
+    pimpl->y = imag;
+}
+
+Complex::~Complex(){
+    delete pimpl;
+}
+
+Complex Complex::operator==(const Complex& c) const{
+    return pimpl->x == c.pimpl->x && pimpl->y == c.pimpl->y;
+}
+
+Complex Complex::operator+(const Complex& c) const{
+    Complex res;
+    res.pimpl->x = pimpl->x+c.pimpl->x;
+    res.pimpl->y = pimpl->y+c.pimpl->y;
+    return res;
+}
+
+Complex Complex::operator*(const Complex& c) const{
+    Complex res;
+    res.pimpl->x = pimpl->x*c.pimpl->x - pimpl->y*c.pimpl->y;
+    res.pimpl->y = pimpl->x*c.pimpl->y + pimpl->y*c.pimpl->x;
+    return res;
+}
+
+Complex Complex::operator=(const Complex& c){
+    pimpl->x = c.pimpl->x;
+    pimpl->y = c.pimpl->y;
+    return *this;
+}
+
+void Complex::print() const{
+    std::cout<<" " << pimpl->x << " + i" << pimpl->y << " ";
+}
+```
+
+comp.hpp
+```c++
+
+#ifndef COMPLEX
+#define COMPLEX
+
+class Impl;
+
+class Complex{
+    public:
+        Complex();
+        Complex(double real);
+        Complex(double real, double imag);
+
+        ~Complex();
+
+        bool operator==(const Complex& c) const;
+        Complex operator+(const Complex& c) const;
+        Complex operator*(const Complex& c) const;
+        Complex operator=(const Complex& c);
+        Complex operator==(const Complex& c) const;
+    private:
+        Impl* pimpl;
+};
+
+#endif
+```
+
+comp_float.cpp
+```c++
+#include "comp.hpp"
+
+class Impl{
+    public:
+        float x;
+        float y;
+};
+
+Complex::Complex(){
+    pimpl = new Impl;
+    pimpl->x = 0.0;
+    pimpl->y = 0.0;
+}
+
+Complex::Complex(const Complex& c){
+    pimpl = new Impl;
+    pimpl->x = c.pimpl->x;
+    pimpl->y = c.pimpl->y;
+}
+
+Complex::Complex(double real){
+    pimpl = new Impl;
+    pimpl->x = real;
+    pimpl->y = 0.0;
+}
+
+Complex::Complex(double real, double imag){
+    pimpl = new Impl;
+    pimpl->x = real;
+    pimpl->y = imag;
+}
+
+Complex::~Complex(){
+    delete pimpl;
+}
+
+Complex Complex::operator==(const Complex& c) const{
+    return pimpl->x == c.pimpl->x && pimpl->y == c.pimpl->y;
+}
+
+Complex Complex::operator+(const Complex& c) const{
+    Complex res;
+    res.pimpl->x = pimpl->x+c.pimpl->x;
+    res.pimpl->y = pimpl->y+c.pimpl->y;
+    return res;
+}
+
+Complex Complex::operator*(const Complex& c) const{
+    Complex res;
+    res.pimpl->x = pimpl->x*c.pimpl->x - pimpl->y*c.pimpl->y;
+    res.pimpl->y = pimpl->x*c.pimpl->y + pimpl->y*c.pimpl->x;
+    return res;
+}
+
+Complex Complex::operator=(const Complex& c){
+    pimpl->x = c.pimpl->x;
+    pimpl->y = c.pimpl->y;
+    return *this;
+}
+
+void Complex::print() const{
+    std::cout<<" " << pimpl->x << " + i" << pimpl->y << " ";
+}
+```
