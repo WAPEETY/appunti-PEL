@@ -1545,3 +1545,183 @@ void Complex::print() const{
     std::cout<<" " << pimpl->x << " + i" << pimpl->y << " ";
 }
 ```
+
+## Double Linked List
+
+```c++
+struct CellaDL{
+    int info;
+    CellaDL* prev;
+    CellaDL* next;
+};
+```
+
+la lista DL vuote sono codificate da due puntatori nullptr
+
+inserire in testa
+```c++
+typedef CellaDL* ListaDL; //puntatore a cella
+
+void prepend(ListaDL& head, ListaDL& tail,int  el){
+    ListaDL pCell = new CellaDL;
+    pCell->prev = nullptr;
+    pCell->info = el;
+    pCell->next = head;
+    if(head != nullprt){
+        head->prev = pCell;
+    }
+    else{
+        tail = pCell;
+    }
+    head = pCell;
+}
+```
+
+inserire in coda
+```c++
+void append(ListaDL& head, ListaDL& tail,int  el){
+    ListaDL pCell = new CellaDL;
+    pCell->next = nullptr;
+    pCell->info = el;
+    pCell->prev = tail;
+    if(tail != nullprt){
+        tail->next = pCell;
+    }
+    else{
+        head = pCell;
+    }
+    tail = pCell;
+}
+```
+
+inserire in posizione
+```c++
+void insert(ListaDL& head, ListaDL& tail,int pos ,int  el){
+    if(pos==0){
+        ListaDL pCell = new CellaDL;
+        pCell->info = el;
+        if(head!=nullptr){
+            pCell->prev = head->prev;
+            head->prev = pCell;
+        }
+        else{
+            pcell->prev = tail;
+            tail = pCell;
+        }
+        pcell->next = head;
+        head = pCell;
+    }
+
+    if(pos>0 && head!=nullptr){
+        insert(head->next,tail,pos-1,el);
+    }
+}
+```
+
+rimuovere in posizione
+```c++
+
+void remove(ListaDL& head, ListaDL& tail,int pos){
+    //modifica doppio puntatore
+    //next va a next->next
+    //prev va a prev->prev
+}
+```
+
+destroy di una DLlist
+```c++
+void destroy(ListaDL& head, ListaDL& tail){
+    while(head){
+        TlistaDL pc=head;
+        head=head->next;
+        delete pc;
+    }
+    head = nullptr;
+    tail = nullptr;
+}
+```
+## Liste circolari
+
+Nullptr se vuota
+
+punto di accesso puntato
+
+"ultima cella" punta alla prima
+
+usate per OS
+
+```c++
+struct Cella{
+    int info;
+    Cella* next;
+};
+
+typedef Cella* ListC;
+```
+
+inserimento
+```c++
+
+void add(ListC& l, int info){
+    ListC pnuova = new Cell;
+    pnuova->info = info;
+    if(l!= nullptr){
+        pnuova->next = l->next;
+        l->next = pnuova;
+    }
+    else{
+        pnuova->next = pnuova;
+        l = pnuova;
+    }
+}
+```
+
+stampa
+```c++
+void print(ListC l){
+    if(l){
+        ListC p = l;
+        do{
+            std::cout<<l->info;
+            l=l->next;
+        }while(p != l);
+    }
+}
+```
+
+eliminazione
+```c++
+bool delete_elem(ListaC &l, int elem){
+    //paletto, cerco, sposto pointer, elimino
+}
+```
+
+## Aggiunta pimpl
+
+porto dentro sia struttura dati sia metodi che dipendono dalla struttura dati
+
+```c++
+
+struct Impl{
+    int a;
+    double b;
+    doumble somma(int x, int y);
+};
+
+Class x{
+    public:
+
+    ...
+
+    private:
+        Impl* pimpl;
+        ...
+}
+
+double Impl::somma(int x,int y){
+    ...
+}
+
+//chiamo con
+Impl->somma(...)
+```
