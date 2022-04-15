@@ -1725,3 +1725,210 @@ double Impl::somma(int x,int y){
 //chiamo con
 Impl->somma(...)
 ```
+
+## Stack
+
+In italiano pila
+
+Abbiamo solo la push e la pop
+
+Push -> metti sulla pila
+Pop -> prendi dalla pila
+
+Lifo - Last In First Out
+
+stack.hpp
+```c++
+#ifndef mystack
+#define mystack
+
+class stack{
+    public:
+        Stack();
+        Stack(const Stack& s);
+        ~Stack();
+
+        void push(int el);
+        int pop();
+        bool empty() const;
+    private:
+        struct Impl;
+        Impl* pimpl;
+}
+
+#endif
+```
+
+stack_vett.cpp
+```c++
+#include <vector>
+#include "stack.hpp"
+
+struct Stack::Impl{
+    std::vector<int> v;
+};
+
+Stack::Stack(){
+    pimp = new Impl;
+}
+
+Stack::Stack(const Stack& s){
+    pimpl = new Impl;
+    pimpl->v = s.pimpl->v;
+}
+
+Stack::~Stack(){
+    delete pimpl;
+}
+
+Stack::push(int el){
+    pimpl->v.push_back(el);
+}
+
+int Stack::pop(){
+    int res = pimpl->v.back();
+    pimpl->v.pop_back();
+    return res;
+}
+
+bool Stack::empty() const{
+    return pimpl->v.size()==0;
+}
+```
+
+main.cpp
+```c++
+#include "stack.hpp"
+
+int main(){
+    s.push(20);
+    s.push(40);
+    s.push(12);
+
+    while(!s.empty()){
+        std::cout <<s.pop() << std::endl;
+    }
+
+    return 0;
+}
+```
+
+```Makefile
+stack: main.o stack.o
+    g++ --std=c++14 main.o stack_vect.o -ostack
+
+main.o: main.cpp stack.hpp
+    g++ --std=c++14 -c main.cpp -omain.o
+
+stack_vect.o: stack_vect.cpp stack.hpp
+    g++ --std=c++14 -c stack_vect.cpp -ostack_vect.o
+```
+
+## Code
+
+FiFo - First In First Out
+
+Enqueue -> metti nella coda
+Dequeue -> prendi dalla coda -> estraggo l'elemento piú vecchio
+
+```c++
+
+class Queue{
+    public:
+        Queue();
+        Queue(const Queue& s);
+        ~Queue();
+        bool isempty();
+        void enqueue(int el);
+        int dequeue();
+    private:
+        struct Impl;
+        Impl* pimpl;
+};
+```
+Implementazione con vettori
+
+```c++
+struct Queue::Impl{
+    vector v;
+    int first;
+    int next;
+    int elem;
+}
+
+Queue::Queue(){
+    pimpl = new Impl;
+    pimpl->v.resize(100,0);
+    pimpl->first = 0;
+    pimpl->next = 0;
+    pimpl->elem = 0;
+}
+
+void Queue::enqueue(int el){
+    if(pimpl->elem <100){
+        v.at(pimpl->next) = elem;
+        pimpl->next = (pimpl->next=1)%100;
+        pimpl->elem++;
+    }
+    else{
+        //shit, devo cambiare size
+    }
+}
+
+int Queue::dequeue(){
+    if(pimpl->elem>0){
+        int res = pimpl->v.at(pimpl->first);
+        pimpl->first = (pimpl->first+1)%100;
+        pimpl->elem--;
+        return res;
+    }
+}
+```
+
+Implementazione con liste
+
+```c++
+struct Cella{
+    int info;
+    Cella* next;
+};
+
+Struct Queue::Impl{
+    Cella* head;
+    Cella* tail;
+}
+
+Queue::Queue(){
+    pimpl = new Impl;
+    pimpl->head = nullptr;
+    pimpl->tail = nullptr;
+}
+
+void Queue::enqueue(int elem){
+    Cella* nuova = new Cella;
+    nuova->next = nullptr;
+    nuova->indo = elem;
+    if(pimpl->head == nullptr){
+        pimpl->head = nuova;
+    }
+    else{
+        pimpl->tail->next = nuova;
+    }
+    pimpl->tail = nuova;
+}
+
+int Queue::dequeue(){
+    if(pimpl->head!=nullptr){
+        int res = pimpl->head->info;
+        Cella *pc = pimpl->head;
+        pimpl->head = pimpl->head->next;
+        delete pc;
+        if(pimpl->head == nullptr){
+            pimpl->tail = nullptr;
+        }
+        return res;
+    }else{
+        //gestisci errore    
+    }
+}
+```
