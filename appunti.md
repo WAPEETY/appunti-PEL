@@ -1932,3 +1932,93 @@ int Queue::dequeue(){
     }
 }
 ```
+
+## Liste doppiamente concatenate con i vector
+
+
+listdlvec.cpp
+```c++
+#include "listdl.hpp"
+#include <vector>
+
+struct List_dl::Impl{
+    vector<int> v;
+    int first;
+    int last;
+    int free;
+    int capacity;
+    int dummy;
+};
+
+List_dl::List_dl(){
+    pimpl = new Impl;
+    pimpl->capacity = 10;
+    pimpl->v.resize(3*pimpl->capacity); //al max 10 elem
+    pimpl->first = -1;
+    pimpl->last = -1;
+    pimpl->free = 0;
+
+    for(int i=0; i<pimpl->capacity-1; i++){
+        pimpl->v.at(i*3+2) = 3*(i+1);
+    }
+    pimpl->v.at((pimpl->capacity-1)*3+2) = -1;
+}
+
+List_dl::~List_dl(){
+    delete pimpl;
+}
+
+void List_dl::prepend(int elem){
+    
+    if(pimpl->free != -1){ //ho blocchi liberi
+        int nb;
+        nb = pimpl->free;
+        pimpl->free = pimpl->v.at(pimpl->free+2);
+
+        pimpl->v.at(nb+2) = first;
+        pimpl->v.at(nb+1) = elem;
+        
+        if(first != -1){ //lista con almeno un elemento
+            pimpl->v.at(pimpl->first) = nb
+        }
+        else{ //caso lista vuota
+            pimpl->last = nb;
+        }
+        pimpl->first = nb;
+    }
+}
+
+int& List_dl::at(int pos){
+    int pc = pimpl->first;
+    while(pos>0){
+        if(pc!=-1){
+            pc = pimpl->v.at(pc+2) //scorre la pos nel vettore
+            pos--;
+        }
+    }
+
+    if(pc!=-1){
+        return pimpl->v.at(pc+1);
+    }
+    else{
+        return pimpl->dummy; //posizione non esistente
+    }
+}
+
+void List_dl::pop_back(){
+    if(pimpl->first!=-1){ //lista non vuota
+        int tr = pimpl->last;
+        pimpl->last = pimpl->v.at(pimpl->last);
+        if(pimpl->last != -1){ //ho ancora almeno un elemento
+            pimpl->v.at(pimpl->last + 2) = -1;
+        }
+        else{
+            pimpl->first = -1;
+        }
+
+        pimpl->v.at(tr+2) = pimpl->free;
+        pimpl->free = tr;
+    }
+}
+
+```
