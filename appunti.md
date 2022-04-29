@@ -2022,3 +2022,75 @@ void List_dl::pop_back(){
 }
 
 ```
+
+## Ruzzle
+
+https://en.wikipedia.org/wiki/Ruzzle
+
+Risolutore di ruzzle, riceviamo una stringa e una tabella e rispondiamo se é possibile fare la parola o no
+
+``` c++
+vector <vector<char>> t;
+```
+
+Usiamo i vector per salvare la matrice
+
+IO: vabb partiamo dalla matrice cosi posso tagliare dal dizionario le parole che non iniziano con lettere non presenti nella matrice
+
+MARIN: in una matrice 4x4 hai: 2*10^13 possibilitá (tipo 20.922.789.888.000)
+
+SEMPRE IO: ```0-0``` ...
+
+``` c++
+
+using std::string;
+using std::vector;
+
+bool ruzzle(const vector<vector<char>>& t, string s){
+    vector<vector<bool>> used(4,vector<bool>(4,false));
+    bool trovato = false;
+    int n=0;c=0;
+
+    while(!trovato && r<4){
+        c=0;
+        while(!trovato && c<4){
+            trovato = ruzzle_ric(t,s,r,c,used);
+        }
+    }
+    return trovato;
+}
+
+bool ruzzle_ric(const vector<vector<char>>& t, string s, int r, int c, vector<vector<bool>>& used){
+    if(r<0 || c<0 || r>=4 || c>=4 || used.at(r).at(c)){
+        return false;
+    }
+    else{
+        if(t.at(r).at(c)!=s.at(0)){
+            return false
+        }
+        else{
+            used.at(r).at(c) = true;
+            if(s.length()==1){
+                return true;
+            }
+            else{
+                bool trovato = false;
+                int sr=r-1,sc;
+                while(!trovato && sr <= r+1){
+                    sc = c-1;
+                    while(!trovato && sc <= c+1){
+                        trovato = ruzzle_ric(t,s.substr(1),sr,sc, used);
+                        sc++;
+                    }
+                    sr++;
+                }
+                if(!trovato){
+                    used.at(r).at(c) = false; //backtracking
+                }
+                return trovato;
+            }
+        }
+    }
+}
+
+```
