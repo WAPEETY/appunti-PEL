@@ -21,7 +21,7 @@ Ció rende possibile la redistribuzione del seguente materiale, anche con modifi
 La copia integrale della seguente puó essere trovata [qui](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
 ### Tipi
-I tipi di dato sonod un insieme di valori sui quali sono definite delle operazioni
+I tipi di dato sono un insieme di valori sui quali sono definite delle operazioni
 
 ### Namespace
 
@@ -38,7 +38,9 @@ ad esempio:
 
 Se invece vogliamo usare un certo namespace come default basterá aggiungere nel codice:
 
-```using namespace <nomeNS>```c++
+```c++
+using namespace <nomeNS>
+```
 
 e quindi, questo ```std::Vector() ``` _[...]_ diventerá ```Vector() ``` _[...]_
 
@@ -159,7 +161,7 @@ infatti per essere piú sicuri conviene usare:
 ```c++
 v.at(h) = 4; //stessa identica cosa
 ```
-Perché con questo metodo il campo ```at``` verifica che siamo dentro al vettore
+Perché con questo metodo il campo ```at``` verifica che siamo dentro al vettore (e genera eccezioni)
 
 <br/>
 
@@ -176,10 +178,10 @@ la ```capacity``` la useremo poco dato che fa tutto il linguaggio
 <br/>
 
 Per aggiungere un elemento in coda:
-```v.pushback(elem) //aggiunge elem in coda al vettore```c++
+```v.pushback(elem) //aggiunge elem in coda al vettore```
 
 Per avere l'ultimo valore:
-```v.back()```c++
+```v.back()```
 
 ### Altre cose fighe della classe vector
 
@@ -297,11 +299,11 @@ bool universale(const std::vector<int> &v){
 
 Da importare con un include
 
-```#include <string>```c++
+```#include <string>```
 
 Si inizializzano cosí:
 
-```std::string l="Hello world"```c++
+```std::string l="Hello world"```
 
 Valgono tutte le proprietá dei vettori e quindi si possono confrontare automaticamente
 
@@ -426,7 +428,7 @@ void inizializza(vector<int> &mazzo){
 ```c++
 vector <int> v;
 for(int i : v){
-    std::cout<<e;
+    std::cout<<i;
 }
 ```
 
