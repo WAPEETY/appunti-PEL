@@ -21,7 +21,7 @@ Ció rende possibile la redistribuzione del seguente materiale, anche con modifi
 La copia integrale della seguente puó essere trovata [qui](https://creativecommons.org/licenses/by-sa/4.0/legalcode).
 
 ### Tipi
-I tipi di dato sonod un insieme di valori sui quali sono definite delle operazioni
+I tipi di dato sono un insieme di valori sui quali sono definite delle operazioni
 
 ### Namespace
 
@@ -2093,4 +2093,66 @@ bool ruzzle_ric(const vector<vector<char>>& t, string s, int r, int c, vector<ve
     }
 }
 
+```
+
+### Metodo statico
+
+Non dipende dallo stato della classe
+
+puó accedere solo alle variabili statiche che esistono anche se la classe viene solo importata senza stanziare un oggetto
+
+### Notazione polacca postfissa
+
+```5 + 7``` notazione infissa
+
+```5 7 +``` notazione polacca postfissa
+
+```5 7 + 8``` semplice calcolo
+
+```5 7 + 8 *```
+
+notaz. infissa  => notaz. polacca
+```5 + (7*8)``` => ```5 7 8 * +```
+
+
+```(12/(5+1))*20```
+```12 5 1 + / 20 *```
+
+```c++
+struct token{
+    double number;
+    char op;
+    bool is_number;
+}
+
+double valuta(vector<token> exp){
+    std::stack<token> s;
+    for(const auto& t:exp){
+        if(t.is_number){
+            s.push(t);
+        }
+        else{
+            Token op2 = s.top(); s.pop();
+            Token op1 = s.top(); s.pop();
+            Tokend res;
+            res.is_number = true;
+            switch(t.op){
+                case '+':
+                    result.number = op1.number + op2.number;
+                    break;
+                case '-':
+                    result.number = op1.number - op2.number;
+                    break;
+                case '*':
+                    result.number = op1.number * op2.number;
+                    break;
+                case '/':
+                    result.number = op1.number / op2.number;
+                    break;
+            }
+            s.push(result);
+        }
+    }
+    return s.pop.().number
+}
 ```
