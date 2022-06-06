@@ -34,7 +34,11 @@ namespace::funzione();
 ```
 
 ad esempio: 
-```std::Vector() ``` _[...]_
+
+```
+std::Vector()
+``` 
+_[...]_
 
 Se invece vogliamo usare un certo namespace come default basterá aggiungere nel codice:
 
@@ -2117,8 +2121,9 @@ notaz. infissa  => notaz. polacca
 ```5 + (7*8)``` => ```5 7 8 * +```
 
 
-```(12/(5+1))*20```
-```12 5 1 + / 20 *```
+```(12/(5+1))*20 ```
+
+```12 5 1 + / 20 * ```
 
 ```c++
 struct token{
