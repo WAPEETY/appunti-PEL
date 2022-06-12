@@ -1000,7 +1000,7 @@ bool esiste_somma(Tlista& t,int somma){
 
 ```
 
-### Dividere la firma dalla funzione nelle classi
+## 9. Dividere la firma dalla funzione nelle classi
 
 ```c++
 
@@ -1171,7 +1171,7 @@ void ListInt::merge_and_destroy(ListInt& l1, ListInt& l2){
 }
 ```
 
-### Override operatori 
+## 10. Override operatori 
 
 Ri-definire un operatore in c++ é possibile.
 Prendiamo in esempio due liste ```l1``` e ```l2```, se di default facessimo ```l1 = l2``` ci troveremmo con due liste confluenti e non con la deep copy che ci aspettiamo.
@@ -1281,7 +1281,7 @@ Complex Complex::operator=(const Complex& c){
 
 Dichiari un operatore amico della classe e puoi fare operazioni che accedono alla roba privata di una classe
 
-## Header
+## 11. Header
 
 Nome: \<nomefile>.hpp
 
@@ -1385,7 +1385,7 @@ clean:
     rm comp comp.o main.o
 ```
 
-### PIMPL - Pointer to impementation
+## 12. PIMPL - Pointer to impementation
 
 Fino ad ora abbiamo usato il metodo classico, ma per usare pimpl facciamo:
 
@@ -1395,7 +1395,7 @@ private:
 
 ```
 
-#### Esempio classe PIMPL
+### Esempio classe PIMPL
 
 comp.cpp
 ```c++
@@ -1559,7 +1559,7 @@ void Complex::print() const{
 }
 ```
 
-## Double Linked List
+## 13. Double Linked List
 
 ```c++
 struct CellaDL{
@@ -1653,7 +1653,7 @@ void destroy(ListaDL& head, ListaDL& tail){
     tail = nullptr;
 }
 ```
-## Liste circolari
+## 14. Liste circolari
 
 Nullptr se vuota
 
@@ -1709,7 +1709,7 @@ bool delete_elem(ListaC &l, int elem){
 }
 ```
 
-## Aggiunta pimpl
+### Aggiunta pimpl
 
 porto dentro sia struttura dati sia metodi che dipendono dalla struttura dati
 
@@ -1739,7 +1739,7 @@ double Impl::somma(int x,int y){
 Impl->somma(...)
 ```
 
-## Stack
+## 15. Stack
 
 In italiano pila
 
@@ -1837,7 +1837,7 @@ stack_vect.o: stack_vect.cpp stack.hpp
     g++ --std=c++14 -c stack_vect.cpp -ostack_vect.o
 ```
 
-## Code
+### Code
 
 FiFo - First In First Out
 
@@ -2036,7 +2036,7 @@ void List_dl::pop_back(){
 
 ```
 
-## Ruzzle
+## 16. Ruzzle
 
 https://en.wikipedia.org/wiki/Ruzzle
 
@@ -2108,13 +2108,13 @@ bool ruzzle_ric(const vector<vector<char>>& t, string s, int r, int c, vector<ve
 
 ```
 
-### Metodo statico
+## 17. Metodo statico
 
 Non dipende dallo stato della classe
 
 puó accedere solo alle variabili statiche che esistono anche se la classe viene solo importata senza stanziare un oggetto
 
-### Notazione polacca postfissa
+## 18. Notazione polacca postfissa (o inversa)
 
 ```5 + 7``` notazione infissa
 
