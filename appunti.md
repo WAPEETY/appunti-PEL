@@ -83,7 +83,7 @@ swap(x,y) = 80;
 
 é totalmente legale _(approfondiremo fra poco)_
 
-##1. Valore per reference:
+## 1. Valore per reference:
 
 ```c++
 int min1(int a,int b){
