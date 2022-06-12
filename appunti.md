@@ -954,7 +954,7 @@ void stampa_rev(Tlista& t){
 ```
 ```c++
 /*  data una lista, cancellare tutti gli elementi 
-    dall'ultima occorrenza dello ero alla fine
+    dall'ultima occorrenza dello zero alla fine
     ES: 2->5->7->0->9->7->0->4->3 elimino 0->4->3
 */
 bool elimina(Tlista& t){
