@@ -1387,7 +1387,8 @@ clean:
 
 ## 12. PIMPL - Pointer to impementation
 
-Fino ad ora abbiamo usato il metodo classico, ma per usare pimpl facciamo:
+PIMPL ci permette di nascondere l'implementazione privata di una classe anche se diamo il file .hpp insieme al compilato
+Fino ad ora abbiamo usato il metodo classico per dichiarare le classi, ma per usare pimpl facciamo:
 
 ```c++
 private:
