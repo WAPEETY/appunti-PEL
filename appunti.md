@@ -171,7 +171,7 @@ Perché con questo metodo il campo ```at``` verifica che siamo dentro al vettore
 
 Con i vector possiamo evitare la variabile con la dimensione dell'array:
 ```c++
-for(int i=0;i<v.size;i++){
+for(int i=0;i<v.size();i++){
     //code
 }
 ```
@@ -182,10 +182,13 @@ la ```capacity``` la useremo poco dato che fa tutto il linguaggio
 <br/>
 
 Per aggiungere un elemento in coda:
-```v.pushback(elem) //aggiunge elem in coda al vettore```
+```v.push_back(elem) //aggiunge elem in coda al vettore```
 
 Per avere l'ultimo valore:
 ```v.back()```
+
+Per avere il primo valore:
+```v.front()```
 
 ### Altre cose fighe della classe vector
 
@@ -218,7 +221,7 @@ void stampa(const std::vector<int> &v){ /*cose*/}
 ```
 ### Bubble Sort
 
-1. Introduciamo una soglia, fino alla soglia é ordinata e tiene gli elementi piú piccoli
+1. Introduciamo una soglia, fino alla soglia é ordinato e tiene gli elementi piú piccoli
 2. sopra la soglia prendo il piú piccolo e lo metto poco sopra la soglia
 3. alzo la soglia di 1
 4. ripeto fino a fine vettore
@@ -338,6 +341,8 @@ std::cout<<y; //7.2
 
 Scorrere array tramite aritmetica puntatori:
 ```c++
+std::vector<int> vet = {30,4};
+int* pv = &vet;
 for(pv = vet;pv<vet+40;pv++){
     std::cout<<*pv<<std::endl; 
 }
@@ -359,7 +364,9 @@ for(it=v.begin();it!=v.end();it++){
     std::cout<<*it<<std::endl;
 }
 ```
+
 Somma elementi con iterator
+
 ```c++
 using namespace std::vector;
 vector<int> v{1,3,5,7,-4,0,3}
